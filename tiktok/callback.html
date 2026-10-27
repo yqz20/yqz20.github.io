@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ربط TikTok — Casber_GG</title>
+<style>
+  body{font-family:system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;max-width:720px;margin:48px auto;padding:0 16px;line-height:1.8;color:#1b1b1f;background:#fff}
+  @media (prefers-color-scheme:dark){body{color:#eee;background:#111}}
+  code{display:block;direction:ltr;text-align:left;word-break:break-all;padding:12px;border:1px solid #8884;border-radius:8px;font-size:0.95rem;margin:12px 0}
+  button{font:inherit;padding:8px 16px;border-radius:8px;border:1px solid #8886;cursor:pointer}
+  .bad{color:#c0392b}
+</style>
+</head>
+<body>
+<h1>ربط TikTok</h1>
+<p id="msg">جارٍ القراءة…</p>
+<code id="code"></code>
+<button id="copy" hidden>انسخ الرمز</button>
+<p>الصق الرمز في نافذة PowerShell حيث ينتظره الأمر <span dir="ltr">tools.tiktok_publish --auth</span>.</p>
+<script>
+  const q = new URLSearchParams(location.search);
+  const code = q.get("code"), err = q.get("error"), desc = q.get("error_description");
+  const msg = document.getElementById("msg"), box = document.getElementById("code"), btn = document.getElementById("copy");
+  if (code) {
+    msg.textContent = "تمّ الربط. هذا هو الرمز (صالح دقائق قليلة):";
+    box.textContent = code;
+    btn.hidden = false;
+    btn.onclick = () => navigator.clipboard.writeText(code).then(() => btn.textContent = "نُسخ ✓");
+  } else {
+    msg.className = "bad";
+    msg.textContent = err ? ("رفض TikTok الربط: " + err + (desc ? " — " + desc : "")) : "لا رمز في الرابط. افتح هذه الصفحة من زر الربط في الأمر.";
+  }
+</script>
+</body>
+</html>
